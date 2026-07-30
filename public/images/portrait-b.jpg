@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="800">
+  <rect width="600" height="800" fill="#141220"/>
+  <rect x="1" y="1" width="598" height="798" fill="none" stroke="#e9e7e2" stroke-opacity="0.2"/>
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
+    font-family="monospace" font-size="14" fill="#e9e7e2" opacity="0.5">PORTRAIT B</text>
+</svg>
