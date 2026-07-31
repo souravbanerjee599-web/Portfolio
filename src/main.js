@@ -57,15 +57,16 @@ if (connectBtn && !REDUCED) {
 const portraitCard = document.getElementById('portrait-card')
 
 if (portraitCard) {
-  const maskCursor = document.createElement('span')
+  const maskCursor = document.createElement('img')
+  maskCursor.src = `${import.meta.env.BASE_URL}images/mask.png`
   maskCursor.className = 'mask-cursor'
+  maskCursor.alt = ''
   maskCursor.setAttribute('aria-hidden', 'true')
-  portraitCard.appendChild(maskCursor)
+  document.body.appendChild(maskCursor)
 
   portraitCard.addEventListener('pointermove', ({ clientX, clientY }) => {
-    const { left, top } = portraitCard.getBoundingClientRect()
-    maskCursor.style.left = `${clientX - left}px`
-    maskCursor.style.top = `${clientY - top}px`
+    maskCursor.style.left = `${clientX}px`
+    maskCursor.style.top = `${clientY}px`
   })
   portraitCard.addEventListener('pointerenter', () => maskCursor.classList.add('is-visible'))
   portraitCard.addEventListener('pointerleave', () => maskCursor.classList.remove('is-visible'))
