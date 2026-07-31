@@ -56,7 +56,7 @@ if (connectBtn && !REDUCED) {
 
 const portraitCard = document.getElementById('portrait-card')
 
-if (portraitCard && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+if (portraitCard) {
   const maskCursor = document.createElement('img')
   maskCursor.src = `${import.meta.env.BASE_URL}images/mask.png`
   maskCursor.className = 'mask-cursor'
