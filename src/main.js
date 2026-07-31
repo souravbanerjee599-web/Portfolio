@@ -53,21 +53,3 @@ if (connectBtn && !REDUCED) {
     gsap.to(connectBtn, { scale: 1, duration: 0.3, ease: 'expo.out' })
   })
 }
-
-const portraitCard = document.getElementById('portrait-card')
-
-if (portraitCard) {
-  const maskCursor = document.createElement('img')
-  maskCursor.src = `${import.meta.env.BASE_URL}images/mask.png`
-  maskCursor.className = 'mask-cursor'
-  maskCursor.alt = ''
-  maskCursor.setAttribute('aria-hidden', 'true')
-  document.body.appendChild(maskCursor)
-
-  portraitCard.addEventListener('pointermove', ({ clientX, clientY }) => {
-    maskCursor.style.left = `${clientX}px`
-    maskCursor.style.top = `${clientY}px`
-  })
-  portraitCard.addEventListener('pointerenter', () => maskCursor.classList.add('is-visible'))
-  portraitCard.addEventListener('pointerleave', () => maskCursor.classList.remove('is-visible'))
-}

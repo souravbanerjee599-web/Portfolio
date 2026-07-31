@@ -495,32 +495,7 @@ button {
   border-radius: var(--radius-card);
   overflow: hidden;
   flex-shrink: 0;
-  cursor: crosshair;
-}
-
-.mask-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 140px;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 50%;
-  mix-blend-mode: difference;
-  pointer-events: none;
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(0.8);
-  z-index: 1001;
-  transition: opacity 160ms ease, transform 160ms ease;
-}
-
-.mask-cursor.is-visible {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .portrait-card { cursor: none; }
+  cursor: url('/Portfolio/images/mask.png') 70 70, crosshair;
 }
 
 .portrait-inner {
