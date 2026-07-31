@@ -58,7 +58,7 @@ const portraitCard = document.getElementById('portrait-card')
 
 if (portraitCard && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
   const maskCursor = document.createElement('img')
-  maskCursor.src = '/images/mask.png'
+  maskCursor.src = `${import.meta.env.BASE_URL}images/mask.png`
   maskCursor.className = 'mask-cursor'
   maskCursor.alt = ''
   maskCursor.setAttribute('aria-hidden', 'true')
