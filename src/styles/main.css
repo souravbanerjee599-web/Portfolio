@@ -507,10 +507,10 @@ button {
   height: 210px;
   object-fit: contain;
   pointer-events: none;
-  opacity: 0;
+  opacity: 1;
   mix-blend-mode: difference;
-  transform: translate(-50%, -50%) scale(0.75);
-  transition: opacity 140ms ease, transform 180ms ease;
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 180ms ease;
 }
 
 .portrait-mask-overlay.is-visible {

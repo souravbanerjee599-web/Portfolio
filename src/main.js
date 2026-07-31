@@ -62,6 +62,8 @@ if (portraitCard) {
   maskOverlay.className = 'portrait-mask-overlay'
   maskOverlay.alt = ''
   maskOverlay.setAttribute('aria-hidden', 'true')
+  maskOverlay.style.left = '50%'
+  maskOverlay.style.top = '50%'
   portraitCard.appendChild(maskOverlay)
 
   portraitCard.addEventListener('pointermove', ({ clientX, clientY }) => {
