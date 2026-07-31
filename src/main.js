@@ -66,11 +66,14 @@ if (portraitCard) {
   maskOverlay.style.top = '50%'
   portraitCard.appendChild(maskOverlay)
 
-  portraitCard.addEventListener('pointermove', ({ clientX, clientY }) => {
+  const moveMaskOverlay = ({ clientX, clientY }) => {
     const { left, top } = portraitCard.getBoundingClientRect()
     maskOverlay.style.left = `${clientX - left}px`
     maskOverlay.style.top = `${clientY - top}px`
-  })
+  }
+
+  portraitCard.addEventListener('pointermove', moveMaskOverlay)
+  portraitCard.addEventListener('mousemove', moveMaskOverlay)
   portraitCard.addEventListener('pointerenter', () => maskOverlay.classList.add('is-visible'))
   portraitCard.addEventListener('pointerleave', () => maskOverlay.classList.remove('is-visible'))
 }
