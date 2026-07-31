@@ -518,6 +518,11 @@ button {
   transform: translate(-50%, -50%) scale(1);
 }
 
+.portrait-card:hover .portrait-mask-overlay {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
 .portrait-inner {
   position: relative;
   width: 100%;
