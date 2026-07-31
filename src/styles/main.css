@@ -489,13 +489,22 @@ button {
 /* Portrait card */
 .portrait-card {
   position: relative;
-  z-index: 3;
+  z-index: 1;
   width: clamp(260px, 32vw, 540px);
   aspect-ratio: 3/4;
   border-radius: var(--radius-card);
   overflow: hidden;
   flex-shrink: 0;
   cursor: none;
+}
+
+.portrait-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.08) 15%, rgba(0, 0, 0, 0.7) 100%);
 }
 
 .portrait-mask-overlay {

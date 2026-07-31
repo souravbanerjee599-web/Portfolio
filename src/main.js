@@ -72,8 +72,13 @@ if (portraitCard) {
     maskOverlay.style.top = `${clientY - top}px`
   }
 
-  portraitCard.addEventListener('pointermove', moveMaskOverlay)
-  portraitCard.addEventListener('mousemove', moveMaskOverlay)
+  document.addEventListener('mousemove', event => {
+    const rect = portraitCard.getBoundingClientRect()
+    const isOverPortrait = event.clientX >= rect.left && event.clientX <= rect.right &&
+      event.clientY >= rect.top && event.clientY <= rect.bottom
+
+    if (isOverPortrait) moveMaskOverlay(event)
+  })
   portraitCard.addEventListener('pointerenter', () => maskOverlay.classList.add('is-visible'))
   portraitCard.addEventListener('pointerleave', () => maskOverlay.classList.remove('is-visible'))
 }
