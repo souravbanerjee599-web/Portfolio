@@ -7,8 +7,6 @@ const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 export function initDust(canvas) {
   const ctx = canvas.getContext('2d')
   let W, H, particles = [], raf = null
-  let mouse = { x: -9999, y: -9999 }
-  let smoothMouse = { x: -9999, y: -9999 }
   let t = 0
 
   function resize() {
@@ -54,8 +52,6 @@ export function initDust(canvas) {
     t += 0.00008
 
     // Smooth mouse — faster lerp = tighter tracking = more responsive feel
-    smoothMouse.x += (mouse.x - smoothMouse.x) * 0.14
-    smoothMouse.y += (mouse.y - smoothMouse.y) * 0.14
 
     for (const p of particles) {
       // Flow field
@@ -67,17 +63,6 @@ export function initDust(canvas) {
       p.vy += (flowVy - p.vy) * 0.03
 
       // Cursor repulsion — wider radius, stronger push
-      const dx = p.x - smoothMouse.x
-      const dy = p.y - smoothMouse.y
-      const dist2 = dx * dx + dy * dy
-      const RADIUS = 240
-      if (dist2 < RADIUS * RADIUS && dist2 > 0.01) {
-        const dist = Math.sqrt(dist2)
-        const force = Math.min(1.4, (RADIUS - dist) / RADIUS) * 1.1
-        p.vx += (dx / dist) * force
-        p.vy += (dy / dist) * force
-      }
-
       // Velocity damping
       p.vx *= 0.96
       p.vy *= 0.96
@@ -104,16 +89,6 @@ export function initDust(canvas) {
   }
 
   // Mouse tracking
-  window.addEventListener('pointermove', e => {
-    mouse.x = e.clientX
-    mouse.y = e.clientY
-  }, { passive: true })
-
-  window.addEventListener('pointerleave', () => {
-    mouse.x = -9999
-    mouse.y = -9999
-  }, { passive: true })
-
   // Pause when hidden
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden && !REDUCED) {

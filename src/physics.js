@@ -139,8 +139,12 @@ export function initPhysics() {
   }
 
   function enableDragging() {
-    world.addEventListener('pointerdown', (event) => {
+    document.addEventListener('pointerdown', (event) => {
       if (activePointerId !== null || event.button !== 0) return
+      const rect = world.getBoundingClientRect()
+      const isInsideWorld = event.clientX >= rect.left && event.clientX <= rect.right
+        && event.clientY >= rect.top && event.clientY <= rect.bottom
+      if (!isInsideWorld) return
       const point = pointFromEvent(event)
       const body = Matter.Query.point(bodyList, point)[0]
       if (!body) return
@@ -150,7 +154,6 @@ export function initPhysics() {
       draggedElement = domList[bodyList.indexOf(body)]
       if (draggedElement) draggedElement.classList.add('is-dragging')
       world.classList.add('is-dragging')
-      world.setPointerCapture(event.pointerId)
       dragConstraint = Matter.Constraint.create({
         pointA: point,
         bodyB: body,
@@ -160,21 +163,20 @@ export function initPhysics() {
         length: 0,
       })
       Matter.Composite.add(engine.world, dragConstraint)
-    })
+    }, true)
 
-    world.addEventListener('pointermove', (event) => {
+    document.addEventListener('pointermove', (event) => {
       if (!dragConstraint || event.pointerId !== activePointerId) return
       event.preventDefault()
       dragConstraint.pointA = pointFromEvent(event)
-    })
+    }, true)
 
     const finishDrag = (event) => {
       if (event.pointerId !== activePointerId) return
-      if (world.hasPointerCapture(event.pointerId)) world.releasePointerCapture(event.pointerId)
       releaseDrag()
     }
-    world.addEventListener('pointerup', finishDrag)
-    world.addEventListener('pointercancel', finishDrag)
+    document.addEventListener('pointerup', finishDrag, true)
+    document.addEventListener('pointercancel', finishDrag, true)
   }
 
   function startPhysics() {
