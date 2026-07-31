@@ -22,14 +22,13 @@ export function initPhysics() {
   const world = document.getElementById('physics-world')
   if (!container || !world) return
 
-  let engine, runner, mouseConstraint
+  let engine, runner, dragConstraint, draggedElement, activePointerId
   let bodyList = []   // Matter.js bodies (parallel array with domList)
   let domList = []    // DOM elements
   let walls = []
   let observer
   let started = false
   let resizeTimer
-  let mouse
 
   function getWorldSize() {
     return { W: world.offsetWidth || 800, H: world.offsetHeight || 400 }
@@ -122,6 +121,62 @@ export function initPhysics() {
     })
   }
 
+  function pointFromEvent(event) {
+    const rect = world.getBoundingClientRect()
+    return {
+      x: (event.clientX - rect.left) * (world.offsetWidth / rect.width),
+      y: (event.clientY - rect.top) * (world.offsetHeight / rect.height),
+    }
+  }
+
+  function releaseDrag() {
+    if (dragConstraint) Matter.Composite.remove(engine.world, dragConstraint)
+    dragConstraint = null
+    if (draggedElement) draggedElement.classList.remove('is-dragging')
+    draggedElement = null
+    activePointerId = null
+    world.classList.remove('is-dragging')
+  }
+
+  function enableDragging() {
+    world.addEventListener('pointerdown', (event) => {
+      if (activePointerId !== null || event.button !== 0) return
+      const point = pointFromEvent(event)
+      const body = Matter.Query.point(bodyList, point)[0]
+      if (!body) return
+
+      event.preventDefault()
+      activePointerId = event.pointerId
+      draggedElement = domList[bodyList.indexOf(body)]
+      if (draggedElement) draggedElement.classList.add('is-dragging')
+      world.classList.add('is-dragging')
+      world.setPointerCapture(event.pointerId)
+      dragConstraint = Matter.Constraint.create({
+        pointA: point,
+        bodyB: body,
+        pointB: { x: point.x - body.position.x, y: point.y - body.position.y },
+        stiffness: 0.18,
+        damping: 0.12,
+        length: 0,
+      })
+      Matter.Composite.add(engine.world, dragConstraint)
+    })
+
+    world.addEventListener('pointermove', (event) => {
+      if (!dragConstraint || event.pointerId !== activePointerId) return
+      event.preventDefault()
+      dragConstraint.pointA = pointFromEvent(event)
+    })
+
+    const finishDrag = (event) => {
+      if (event.pointerId !== activePointerId) return
+      if (world.hasPointerCapture(event.pointerId)) world.releasePointerCapture(event.pointerId)
+      releaseDrag()
+    }
+    world.addEventListener('pointerup', finishDrag)
+    world.addEventListener('pointercancel', finishDrag)
+  }
+
   function startPhysics() {
     if (started) return
     started = true
@@ -135,17 +190,9 @@ export function initPhysics() {
     spawnCircles(W, H)
 
     // Mouse / touch constraint — no Render needed, just the MouseConstraint
-    mouse = Matter.Mouse.create(world)
-
-    // Fix scroll offset
-    mouse.element.removeEventListener('mousewheel', mouse.mousewheel)
-    mouse.element.removeEventListener('DOMMouseScroll', mouse.mousewheel)
-
-    mouseConstraint = Matter.MouseConstraint.create(engine, {
-      mouse,
-      constraint: { stiffness: 0.2, render: { visible: false } },
-    })
-    Matter.Composite.add(engine.world, mouseConstraint)
+    // The visible DOM circles sit above the simulation, so use Pointer Events
+    // directly for a dependable mouse and touch drag constraint.
+    enableDragging()
 
     // Sync DOM every engine tick
     Matter.Events.on(engine, 'afterUpdate', () => {
@@ -157,31 +204,6 @@ export function initPhysics() {
 
     // Forward touch events to the mouse element so Matter.js picks them up
     // Matter.Mouse already listens to its element; we map touches → pointer-style events
-    world.addEventListener('touchstart', (e) => {
-      e.preventDefault()
-      const t = e.touches[0]
-      const rect = world.getBoundingClientRect()
-      mouse.position.x = t.clientX - rect.left
-      mouse.position.y = t.clientY - rect.top
-      mouse.button = 0
-      // Dispatch a synthetic mousedown so MouseConstraint grabs bodies
-      world.dispatchEvent(new MouseEvent('mousedown', { clientX: t.clientX, clientY: t.clientY, bubbles: true }))
-    }, { passive: false })
-
-    world.addEventListener('touchmove', (e) => {
-      e.preventDefault()
-      const t = e.touches[0]
-      const rect = world.getBoundingClientRect()
-      mouse.position.x = t.clientX - rect.left
-      mouse.position.y = t.clientY - rect.top
-      world.dispatchEvent(new MouseEvent('mousemove', { clientX: t.clientX, clientY: t.clientY, bubbles: true }))
-    }, { passive: false })
-
-    world.addEventListener('touchend', (e) => {
-      const t = e.changedTouches[0]
-      mouse.button = -1
-      world.dispatchEvent(new MouseEvent('mouseup', { clientX: t.clientX, clientY: t.clientY, bubbles: true }))
-    }, { passive: true })
   }
 
   function rebuild() {

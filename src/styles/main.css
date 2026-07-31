@@ -717,6 +717,11 @@ button {
   overflow: hidden;
 }
 
+.physics-world.is-dragging,
+.physics-world.is-dragging .physics-circle {
+  cursor: grabbing;
+}
+
 /* Circle labels (DOM-synced to Matter.js bodies) */
 .physics-circle {
   position: absolute;
@@ -746,6 +751,11 @@ button {
 
 .physics-circle:active {
   cursor: grabbing;
+}
+
+.physics-circle.is-dragging {
+  border-color: rgba(233,231,226,0.75);
+  background: rgba(233,231,226,0.08);
 }
 
 /* =============================================
