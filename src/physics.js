@@ -67,9 +67,15 @@ export function initPhysics() {
       const baseX = col * colW + colW * 0.5
       const jitter = (Math.random() - 0.5) * colW * 0.4
       const spawnX = Math.max(r + 4, Math.min(W - r - 4, baseX + jitter))
-      const spawnY = -r * 2 - i * 8 - Math.random() * 40
+      // Start every ball inside the ceiling.  The previous positions were
+      // above the top wall, so that wall stopped the balls before they could
+      // enter the visible play area.
+      const row = Math.floor(i / cols)
+      const spawnY = r + 18 + row * 20 + Math.random() * 18
 
-      const delay = i * 70 + Math.random() * 80
+      // A small stagger makes the first arrival read as a drop, rather than
+      // placing every ball in the world at the same instant.
+      const delay = i * 90 + Math.random() * 70
 
       setTimeout(() => {
         if (!engine) return
