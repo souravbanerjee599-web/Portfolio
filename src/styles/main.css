@@ -499,18 +499,19 @@ button {
 }
 
 .mask-cursor {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
-  width: 112px;
-  height: 112px;
-  object-fit: cover;
-  border-radius: 50%;
+  width: 160px;
+  height: 160px;
+  background: #fff;
+  -webkit-mask: url('/Portfolio/images/mask.png') center / contain no-repeat;
+  mask: url('/Portfolio/images/mask.png') center / contain no-repeat;
+  mix-blend-mode: difference;
   pointer-events: none;
   opacity: 0;
   transform: translate(-50%, -50%) scale(0.8);
-  mix-blend-mode: difference;
-  z-index: 1000;
+  z-index: 4;
   transition: opacity 160ms ease, transform 160ms ease;
 }
 
