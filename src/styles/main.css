@@ -495,7 +495,27 @@ button {
   border-radius: var(--radius-card);
   overflow: hidden;
   flex-shrink: 0;
-  cursor: url('/Portfolio/images/mask.png') 70 70, crosshair;
+  cursor: none;
+}
+
+.portrait-mask-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  width: 210px;
+  height: 210px;
+  object-fit: contain;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%) scale(0.75);
+  transition: opacity 140ms ease, transform 180ms ease;
+}
+
+.portrait-mask-overlay.is-visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .portrait-inner {
