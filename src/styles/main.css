@@ -498,6 +498,31 @@ button {
   cursor: crosshair;
 }
 
+.mask-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 112px;
+  height: 112px;
+  object-fit: cover;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.8);
+  mix-blend-mode: difference;
+  z-index: 1000;
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.mask-cursor.is-visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .portrait-card { cursor: none; }
+}
+
 .portrait-inner {
   position: relative;
   width: 100%;
