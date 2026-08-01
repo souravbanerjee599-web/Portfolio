@@ -11,6 +11,7 @@ const lbThumbs = document.getElementById('lb-thumbnails')
 const lbClose = document.getElementById('lightbox-close')
 const lbPrev = document.getElementById('lb-prev')
 const lbNext = document.getElementById('lb-next')
+const lbExternalLink = document.getElementById('lb-external-link')
 
 function open(projectIndex) {
   currentProject = projects[projectIndex]
@@ -19,6 +20,14 @@ function open(projectIndex) {
 
   // Populate
   lbTitle.textContent = `${currentProject.title} — ${currentProject.subtitle}`
+  if (currentProject.externalUrl) {
+    lbExternalLink.href = currentProject.externalUrl
+    lbExternalLink.textContent = `${currentProject.externalLabel || 'View project'} ↗`
+    lbExternalLink.removeAttribute('hidden')
+  } else {
+    lbExternalLink.setAttribute('hidden', '')
+    lbExternalLink.removeAttribute('href')
+  }
 
   // Thumbnails
   lbThumbs.innerHTML = ''
@@ -122,7 +131,7 @@ document.addEventListener('keydown', (e) => {
 // Focus trap
 lb?.addEventListener('keydown', (e) => {
   if (e.key !== 'Tab') return
-  const focusable = lb.querySelectorAll('button:not([disabled]), [tabindex="0"]')
+  const focusable = lb.querySelectorAll('a[href], button:not([disabled]), [tabindex="0"]')
   const first = focusable[0]
   const last = focusable[focusable.length - 1]
   if (e.shiftKey ? document.activeElement === first : document.activeElement === last) {

@@ -893,6 +893,27 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
+}
+
+.lightbox-external-link {
+  margin-left: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  padding: 11px 15px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.lightbox-external-link:hover,
+.lightbox-external-link:focus-visible {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+  outline: none;
 }
 
 .lightbox-title {

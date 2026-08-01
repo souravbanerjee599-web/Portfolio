@@ -16,6 +16,8 @@ export const projects = [
     id: 'siru',
     title: 'SIRU MOBILE APP',
     subtitle: 'Hyperlocal Commerce',
+    externalUrl: 'https://www.figma.com/design/XLKlUvTwB81qBINL1pdw9v/Untitled?node-id=92-12019&t=yvyH3h39myQBSWar-1',
+    externalLabel: 'View Figma design',
     slides: [
       '/images/siru/01.jpg',
       '/images/siru/02.jpg',
