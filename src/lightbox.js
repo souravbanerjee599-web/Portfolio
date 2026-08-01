@@ -153,12 +153,9 @@ export function initLightbox() {
   document.querySelectorAll('.project-card').forEach((card) => {
     const idx = parseInt(card.dataset.project, 10)
     const project = projects[idx]
+    if (project.prototypeUrl) return
 
     const activateProject = () => {
-      if (project.prototypeUrl) {
-        window.open(project.prototypeUrl, '_blank', 'noopener,noreferrer')
-        return
-      }
       open(idx)
     }
 
