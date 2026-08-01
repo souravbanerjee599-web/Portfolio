@@ -867,6 +867,11 @@ button {
   transition: opacity 0.3s;
 }
 
+/* The base flex layout must not override the HTML hidden attribute. */
+.lightbox[hidden] {
+  display: none;
+}
+
 .lightbox:not([hidden]) {
   display: flex;
 }
