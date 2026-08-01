@@ -3,6 +3,7 @@ export const projects = [
     id: 'dotpvp',
     title: 'DOTPVP DASHBOARD',
     subtitle: 'Web3 Platform',
+    prototypeUrl: 'https://www.figma.com/proto/XLKlUvTwB81qBINL1pdw9v/Untitled?node-id=139-127588&m=draw&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&t=oETQPht6b73XHeur-1',
     slides: [
       '/images/dotpvp/01.jpg',
       '/images/dotpvp/02.jpg',
@@ -32,6 +33,7 @@ export const projects = [
     id: 'agent',
     title: 'AGENT DASHBOARD',
     subtitle: 'Web3 Platform',
+    prototypeUrl: 'https://www.figma.com/proto/XLKlUvTwB81qBINL1pdw9v/Untitled?node-id=139-128061&m=draw&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&t=oETQPht6b73XHeur-1',
     slides: [
       '/images/agent/01.jpg',
       '/images/agent/02.jpg',
