@@ -152,12 +152,21 @@ export function initLightbox() {
   // Wire up card clicks
   document.querySelectorAll('.project-card').forEach((card) => {
     const idx = parseInt(card.dataset.project, 10)
+    const project = projects[idx]
 
-    card.addEventListener('click', () => open(idx))
+    const activateProject = () => {
+      if (project.prototypeUrl) {
+        window.open(project.prototypeUrl, '_blank', 'noopener,noreferrer')
+        return
+      }
+      open(idx)
+    }
+
+    card.addEventListener('click', activateProject)
     card.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault()
-        open(idx)
+        activateProject()
       }
     })
   })
