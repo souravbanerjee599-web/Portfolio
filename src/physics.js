@@ -149,8 +149,9 @@ export function initPhysics() {
   }
 
   function enableDragging() {
-    document.addEventListener('pointerdown', (event) => {
-      if (activePointerId !== null || event.button !== 0) return
+    const beginDrag = (event, inputId) => {
+      const isTouch = event.pointerType === 'touch'
+      if (activePointerId !== null || (!isTouch && event.button !== 0)) return
       const rect = world.getBoundingClientRect()
       const isInsideWorld = event.clientX >= rect.left && event.clientX <= rect.right
         && event.clientY >= rect.top && event.clientY <= rect.bottom
@@ -159,8 +160,8 @@ export function initPhysics() {
       const body = Matter.Query.point(bodyList, point)[0]
       if (!body) return
 
-      event.preventDefault()
-      activePointerId = event.pointerId
+      if (event.cancelable) event.preventDefault()
+      activePointerId = inputId
       draggedBody = body
       draggedElement = domList[bodyList.indexOf(body)]
       if (draggedElement) draggedElement.classList.add('is-dragging')
@@ -180,11 +181,11 @@ export function initPhysics() {
         length: 0,
       })
       Matter.Composite.add(engine.world, dragConstraint)
-    }, true)
+    }
 
-    document.addEventListener('pointermove', (event) => {
-      if (!dragConstraint || event.pointerId !== activePointerId) return
-      event.preventDefault()
+    const moveDrag = (event, inputId) => {
+      if (!dragConstraint || inputId !== activePointerId) return
+      if (event.cancelable) event.preventDefault()
       const point = pointFromEvent(event)
       const now = performance.now()
       const elapsed = Math.max(16, now - lastDragPoint.time)
@@ -195,14 +196,29 @@ export function initPhysics() {
       lastDragPoint.point = point
       lastDragPoint.time = now
       dragConstraint.pointA = point
-    }, true)
-
-    const finishDrag = (event) => {
-      if (event.pointerId !== activePointerId) return
-      releaseDrag()
     }
-    document.addEventListener('pointerup', finishDrag, true)
-    document.addEventListener('pointercancel', finishDrag, true)
+
+    const finishDrag = inputId => {
+      if (inputId === activePointerId) releaseDrag()
+    }
+
+    // Prefer Pointer Events for mouse, touch and pen. Some embedded browsers
+    // only expose classic mouse events, so give those browsers a real fallback.
+    if ('PointerEvent' in window) {
+      world.addEventListener('pointerdown', event => {
+        const inputId = `pointer:${event.pointerId}`
+        beginDrag(event, inputId)
+        if (activePointerId === inputId) world.setPointerCapture?.(event.pointerId)
+      })
+      window.addEventListener('pointermove', event => moveDrag(event, `pointer:${event.pointerId}`))
+      window.addEventListener('pointerup', event => finishDrag(`pointer:${event.pointerId}`))
+      window.addEventListener('pointercancel', event => finishDrag(`pointer:${event.pointerId}`))
+      return
+    }
+
+    world.addEventListener('mousedown', event => beginDrag(event, 'mouse'))
+    window.addEventListener('mousemove', event => moveDrag(event, 'mouse'))
+    window.addEventListener('mouseup', () => finishDrag('mouse'))
   }
 
   function startPhysics() {
