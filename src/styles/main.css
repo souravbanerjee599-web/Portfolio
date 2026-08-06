@@ -715,6 +715,7 @@ button {
   min-height: 400px;
   touch-action: none;
   overflow: hidden;
+  cursor: grab;
 }
 
 .physics-world.is-dragging,

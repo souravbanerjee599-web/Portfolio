@@ -22,7 +22,7 @@ export function initPhysics() {
   const world = document.getElementById('physics-world')
   if (!container || !world) return
 
-  let engine, runner, dragConstraint, draggedElement, activePointerId
+  let engine, runner, dragConstraint, draggedBody, draggedElement, activePointerId, lastDragPoint
   let bodyList = []   // Matter.js bodies (parallel array with domList)
   let domList = []    // DOM elements
   let walls = []
@@ -80,9 +80,10 @@ export function initPhysics() {
         if (!engine) return
 
         const body = Matter.Bodies.circle(spawnX, spawnY, r, {
-          restitution: 0.15 + Math.random() * 0.45,
-          friction: 0.05,
-          frictionAir: 0.02,
+          restitution: 0.68 + Math.random() * 0.22,
+          friction: 0.015,
+          frictionAir: 0.008,
+          density: 0.001 + i * 0.00003,
           slop: 0.5,
         })
         Matter.Composite.add(engine.world, body)
@@ -111,7 +112,7 @@ export function initPhysics() {
   }
 
   function capVelocities() {
-    const MAX = 20
+    const MAX = 26
     bodyList.forEach(body => {
       const { x, y } = body.velocity
       const spd = Math.sqrt(x * x + y * y)
@@ -131,10 +132,19 @@ export function initPhysics() {
 
   function releaseDrag() {
     if (dragConstraint) Matter.Composite.remove(engine.world, dragConstraint)
+    if (draggedBody && lastDragPoint?.velocity) {
+      const { x, y } = lastDragPoint.velocity
+      Matter.Body.setVelocity(draggedBody, {
+        x: Math.max(-18, Math.min(18, x)),
+        y: Math.max(-18, Math.min(18, y)),
+      })
+    }
     dragConstraint = null
+    draggedBody = null
     if (draggedElement) draggedElement.classList.remove('is-dragging')
     draggedElement = null
     activePointerId = null
+    lastDragPoint = null
     world.classList.remove('is-dragging')
   }
 
@@ -151,15 +161,22 @@ export function initPhysics() {
 
       event.preventDefault()
       activePointerId = event.pointerId
+      draggedBody = body
       draggedElement = domList[bodyList.indexOf(body)]
       if (draggedElement) draggedElement.classList.add('is-dragging')
       world.classList.add('is-dragging')
+      Matter.Sleeping.set(body, false)
+      lastDragPoint = {
+        point,
+        time: performance.now(),
+        velocity: { x: 0, y: 0 },
+      }
       dragConstraint = Matter.Constraint.create({
         pointA: point,
         bodyB: body,
         pointB: { x: point.x - body.position.x, y: point.y - body.position.y },
-        stiffness: 0.18,
-        damping: 0.12,
+        stiffness: 0.34,
+        damping: 0.06,
         length: 0,
       })
       Matter.Composite.add(engine.world, dragConstraint)
@@ -168,7 +185,16 @@ export function initPhysics() {
     document.addEventListener('pointermove', (event) => {
       if (!dragConstraint || event.pointerId !== activePointerId) return
       event.preventDefault()
-      dragConstraint.pointA = pointFromEvent(event)
+      const point = pointFromEvent(event)
+      const now = performance.now()
+      const elapsed = Math.max(16, now - lastDragPoint.time)
+      lastDragPoint.velocity = {
+        x: ((point.x - lastDragPoint.point.x) / elapsed) * 16.67,
+        y: ((point.y - lastDragPoint.point.y) / elapsed) * 16.67,
+      }
+      lastDragPoint.point = point
+      lastDragPoint.time = now
+      dragConstraint.pointA = point
     }, true)
 
     const finishDrag = (event) => {
