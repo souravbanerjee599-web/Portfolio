@@ -165,7 +165,15 @@ export function initPhysics() {
         && event.clientY >= rect.top && event.clientY <= rect.bottom
       if (!isInsideWorld) return
       const point = pointFromEvent(event)
-      const body = Matter.Query.point(bodyList, point)[0]
+      // Prefer the circle that was actually pressed. This avoids a failed
+      // geometric hit-test when the DOM and physics ticks are a frame apart.
+      const pressedCircle = event.target instanceof Element
+        ? event.target.closest('.physics-circle')
+        : null
+      const pressedIndex = pressedCircle ? domList.indexOf(pressedCircle) : -1
+      const body = pressedIndex >= 0
+        ? bodyList[pressedIndex]
+        : Matter.Query.point(bodyList, point)[0]
       if (!body) return
 
       if (event.cancelable) event.preventDefault()
@@ -221,12 +229,12 @@ export function initPhysics() {
       beginDrag(event, inputId)
       if (activePointerId === inputId) world.setPointerCapture?.(event.pointerId)
     }, true)
-    window.addEventListener('pointermove', event => moveDrag(event, inputIdFor(event)))
-    window.addEventListener('pointerup', event => finishDrag(inputIdFor(event)))
-    window.addEventListener('pointercancel', event => finishDrag(inputIdFor(event)))
+    document.addEventListener('pointermove', event => moveDrag(event, inputIdFor(event)), true)
+    document.addEventListener('pointerup', event => finishDrag(inputIdFor(event)), true)
+    document.addEventListener('pointercancel', event => finishDrag(inputIdFor(event)), true)
     document.addEventListener('mousedown', event => beginDrag(event, 'mouse'), true)
-    window.addEventListener('mousemove', event => moveDrag(event, 'mouse'))
-    window.addEventListener('mouseup', () => finishDrag('mouse'))
+    document.addEventListener('mousemove', event => moveDrag(event, 'mouse'), true)
+    document.addEventListener('mouseup', () => finishDrag('mouse'), true)
   }
 
   function startPhysics() {
