@@ -206,15 +206,18 @@ export function initPhysics() {
     // events even when they do not expose the PointerEvent constructor, while
     // others provide only classic mouse events. The active input guard prevents
     // the duplicate browser events from starting a second drag.
-    world.addEventListener('pointerdown', event => {
+    // Capture presses at the document level. This keeps drag-starts reliable
+    // even when an embedded browser puts another visual layer above the world
+    // or does not bubble the press from a transformed circle as expected.
+    document.addEventListener('pointerdown', event => {
       const inputId = `pointer:${event.pointerId}`
       beginDrag(event, inputId)
       if (activePointerId === inputId) world.setPointerCapture?.(event.pointerId)
-    })
+    }, true)
     window.addEventListener('pointermove', event => moveDrag(event, `pointer:${event.pointerId}`))
     window.addEventListener('pointerup', event => finishDrag(`pointer:${event.pointerId}`))
     window.addEventListener('pointercancel', event => finishDrag(`pointer:${event.pointerId}`))
-    world.addEventListener('mousedown', event => beginDrag(event, 'mouse'))
+    document.addEventListener('mousedown', event => beginDrag(event, 'mouse'), true)
     window.addEventListener('mousemove', event => moveDrag(event, 'mouse'))
     window.addEventListener('mouseup', () => finishDrag('mouse'))
   }
