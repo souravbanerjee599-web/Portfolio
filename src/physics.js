@@ -19,7 +19,7 @@ const LABELS = [
   'PROTOTYPING',
 ]
 
-const BASE_RADII = [62, 52, 56, 60, 44, 50, 54, 58, 56, 50, 54, 52, 60, 48]
+const BASE_RADII = [68, 58, 62, 66, 50, 56, 60, 64, 62, 56, 60, 58, 66, 54]
 
 export function initPhysics() {
   const container = document.getElementById('physics-container')
