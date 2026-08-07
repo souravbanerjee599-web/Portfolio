@@ -6,6 +6,7 @@ import { initReveal } from './reveal.js'
 import { initMarquee } from './marquee.js'
 import { initLightbox } from './lightbox.js'
 import { initPhysics } from './physics.js'
+import { initBackgroundRipples } from './ripple.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -42,6 +43,9 @@ initLightbox()
 
 // ---- Capabilities physics ----
 initPhysics()
+
+// ---- Background ripples ----
+initBackgroundRipples()
 
 // ---- Connect section: button pulse on hover ----
 const connectBtn = document.querySelector('.connect-btn')
