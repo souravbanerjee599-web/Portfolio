@@ -22,7 +22,7 @@ export function initPhysics() {
   const world = document.getElementById('physics-world')
   if (!container || !world) return
 
-  let engine, runner, dragConstraint, draggedBody, draggedElement, activePointerId, lastDragPoint
+  let engine, runner, draggedBody, draggedElement, activePointerId, lastDragPoint, dragOffset
   let bodyList = []   // Matter.js bodies (parallel array with domList)
   let domList = []    // DOM elements
   let walls = []
@@ -131,20 +131,20 @@ export function initPhysics() {
   }
 
   function releaseDrag() {
-    if (dragConstraint) Matter.Composite.remove(engine.world, dragConstraint)
     if (draggedBody && lastDragPoint?.velocity) {
       const { x, y } = lastDragPoint.velocity
+      Matter.Body.setStatic(draggedBody, false)
       Matter.Body.setVelocity(draggedBody, {
         x: Math.max(-18, Math.min(18, x)),
         y: Math.max(-18, Math.min(18, y)),
       })
     }
-    dragConstraint = null
     draggedBody = null
     if (draggedElement) draggedElement.classList.remove('is-dragging')
     draggedElement = null
     activePointerId = null
     lastDragPoint = null
+    dragOffset = null
     world.classList.remove('is-dragging')
   }
 
@@ -167,24 +167,20 @@ export function initPhysics() {
       if (draggedElement) draggedElement.classList.add('is-dragging')
       world.classList.add('is-dragging')
       Matter.Sleeping.set(body, false)
+      dragOffset = { x: point.x - body.position.x, y: point.y - body.position.y }
+      // Keeping the selected body static while it is held makes its motion
+      // immediate and dependable on every browser. It resumes normal gravity
+      // and collision physics when released.
+      Matter.Body.setStatic(body, true)
       lastDragPoint = {
         point,
         time: performance.now(),
         velocity: { x: 0, y: 0 },
       }
-      dragConstraint = Matter.Constraint.create({
-        pointA: point,
-        bodyB: body,
-        pointB: { x: point.x - body.position.x, y: point.y - body.position.y },
-        stiffness: 0.34,
-        damping: 0.06,
-        length: 0,
-      })
-      Matter.Composite.add(engine.world, dragConstraint)
     }
 
     const moveDrag = (event, inputId) => {
-      if (!dragConstraint || inputId !== activePointerId) return
+      if (!draggedBody || inputId !== activePointerId) return
       if (event.cancelable) event.preventDefault()
       const point = pointFromEvent(event)
       const now = performance.now()
@@ -195,7 +191,10 @@ export function initPhysics() {
       }
       lastDragPoint.point = point
       lastDragPoint.time = now
-      dragConstraint.pointA = point
+      Matter.Body.setPosition(draggedBody, {
+        x: point.x - dragOffset.x,
+        y: point.y - dragOffset.y,
+      })
     }
 
     const finishDrag = inputId => {
