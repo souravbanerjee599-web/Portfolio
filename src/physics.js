@@ -22,7 +22,7 @@ export function initPhysics() {
   const world = document.getElementById('physics-world')
   if (!container || !world) return
 
-  let engine, runner, draggedBody, draggedElement, activePointerId, lastDragPoint, dragOffset
+  let engine, runner, draggedBody, draggedElement, activePointerId = null, lastDragPoint, dragOffset
   let bodyList = []   // Matter.js bodies (parallel array with domList)
   let domList = []    // DOM elements
   let walls = []
