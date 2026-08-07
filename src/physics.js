@@ -19,7 +19,8 @@ const LABELS = [
   'PROTOTYPING',
 ]
 
-const BASE_RADII = [68, 58, 62, 66, 50, 56, 60, 64, 62, 56, 60, 58, 66, 54]
+// Deliberately varied sizes make the capability field feel organically filled.
+const BASE_RADII = [104, 44, 76, 90, 36, 62, 52, 96, 70, 46, 84, 40, 100, 58]
 
 export function initPhysics() {
   const container = document.getElementById('physics-container')
