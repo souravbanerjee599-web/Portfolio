@@ -149,6 +149,13 @@ export function initPhysics() {
   }
 
   function enableDragging() {
+    // Browsers commonly dispatch both Pointer Events and legacy mouse events
+    // for one physical mouse gesture. Treat them as the same input so a
+    // pointer-down followed by mouse-move still drags the selected ball.
+    const inputIdFor = event => event.pointerType === 'mouse' || !event.pointerType
+      ? 'mouse'
+      : `pointer:${event.pointerId}`
+
     const beginDrag = (event, inputId) => {
       const isTouch = event.pointerType === 'touch'
       const isPrimaryButton = event.button == null || event.button === 0 || event.button === 1
@@ -210,13 +217,13 @@ export function initPhysics() {
     // even when an embedded browser puts another visual layer above the world
     // or does not bubble the press from a transformed circle as expected.
     document.addEventListener('pointerdown', event => {
-      const inputId = `pointer:${event.pointerId}`
+      const inputId = inputIdFor(event)
       beginDrag(event, inputId)
       if (activePointerId === inputId) world.setPointerCapture?.(event.pointerId)
     }, true)
-    window.addEventListener('pointermove', event => moveDrag(event, `pointer:${event.pointerId}`))
-    window.addEventListener('pointerup', event => finishDrag(`pointer:${event.pointerId}`))
-    window.addEventListener('pointercancel', event => finishDrag(`pointer:${event.pointerId}`))
+    window.addEventListener('pointermove', event => moveDrag(event, inputIdFor(event)))
+    window.addEventListener('pointerup', event => finishDrag(inputIdFor(event)))
+    window.addEventListener('pointercancel', event => finishDrag(inputIdFor(event)))
     document.addEventListener('mousedown', event => beginDrag(event, 'mouse'), true)
     window.addEventListener('mousemove', event => moveDrag(event, 'mouse'))
     window.addEventListener('mouseup', () => finishDrag('mouse'))
