@@ -8,6 +8,7 @@ export function initDust(canvas) {
   const ctx = canvas.getContext('2d')
   let W, H, particles = [], raf = null
   let t = 0
+  let ripplePulses = []
 
   function resize() {
     W = canvas.width = window.innerWidth
@@ -62,6 +63,20 @@ export function initDust(canvas) {
       p.vx += (flowVx - p.vx) * 0.03
       p.vy += (flowVy - p.vy) * 0.03
 
+      // Each visual ripple sends a soft, expanding wave through the dust.
+      // Only particles close to the wave-front receive a small outward push.
+      for (const wave of ripplePulses) {
+        const dx = p.x - wave.x
+        const dy = p.y - wave.y
+        const distance = Math.hypot(dx, dy) || 1
+        const ringDistance = Math.abs(distance - wave.radius)
+        if (ringDistance < 28) {
+          const waveStrength = (1 - ringDistance / 28) * wave.life * 0.085
+          p.vx += (dx / distance) * waveStrength
+          p.vy += (dy / distance) * waveStrength
+        }
+      }
+
       // Cursor repulsion — wider radius, stronger push
       // Velocity damping
       p.vx *= 0.96
@@ -84,6 +99,12 @@ export function initDust(canvas) {
       else if (p.y > H + 2) p.y = -2
     }
 
+    ripplePulses.forEach(wave => {
+      wave.radius += 5.2
+      wave.life -= 0.016
+    })
+    ripplePulses = ripplePulses.filter(wave => wave.life > 0 && wave.radius < 360)
+
     drawFrame()
     raf = requestAnimationFrame(tick)
   }
@@ -94,6 +115,14 @@ export function initDust(canvas) {
     if (!document.hidden && !REDUCED) {
       raf = requestAnimationFrame(tick)
     }
+  })
+
+  document.addEventListener('background-ripple', event => {
+    const { x, y } = event.detail || {}
+    if (!Number.isFinite(x) || !Number.isFinite(y)) return
+    ripplePulses.push({ x, y, radius: 0, life: 1 })
+    // Keep the background work lightweight when the mouse moves quickly.
+    if (ripplePulses.length > 5) ripplePulses.shift()
   })
 
   window.addEventListener('resize', resize, { passive: true })
