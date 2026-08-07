@@ -13,9 +13,13 @@ const LABELS = [
   'WEB APP\nDESIGN',
   'DESIGN\nSYSTEMS',
   'MOBILE\nDESIGN',
+  'PRODUCT\nSTRATEGY',
+  'DESIGN\nRESEARCH',
+  'E-COMMERCE\nEXPERIENCE',
+  'PROTOTYPING',
 ]
 
-const BASE_RADII = [62, 52, 56, 60, 44, 50, 54, 58, 56, 50]
+const BASE_RADII = [62, 52, 56, 60, 44, 50, 54, 58, 56, 50, 54, 52, 60, 48]
 
 export function initPhysics() {
   const container = document.getElementById('physics-container')
