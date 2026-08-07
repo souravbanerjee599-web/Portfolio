@@ -202,20 +202,18 @@ export function initPhysics() {
       if (inputId === activePointerId) releaseDrag()
     }
 
-    // Prefer Pointer Events for mouse, touch and pen. Some embedded browsers
-    // only expose classic mouse events, so give those browsers a real fallback.
-    if ('PointerEvent' in window) {
-      world.addEventListener('pointerdown', event => {
-        const inputId = `pointer:${event.pointerId}`
-        beginDrag(event, inputId)
-        if (activePointerId === inputId) world.setPointerCapture?.(event.pointerId)
-      })
-      window.addEventListener('pointermove', event => moveDrag(event, `pointer:${event.pointerId}`))
-      window.addEventListener('pointerup', event => finishDrag(`pointer:${event.pointerId}`))
-      window.addEventListener('pointercancel', event => finishDrag(`pointer:${event.pointerId}`))
-      return
-    }
-
+    // Listen to both input families. Some embedded browsers dispatch pointer
+    // events even when they do not expose the PointerEvent constructor, while
+    // others provide only classic mouse events. The active input guard prevents
+    // the duplicate browser events from starting a second drag.
+    world.addEventListener('pointerdown', event => {
+      const inputId = `pointer:${event.pointerId}`
+      beginDrag(event, inputId)
+      if (activePointerId === inputId) world.setPointerCapture?.(event.pointerId)
+    })
+    window.addEventListener('pointermove', event => moveDrag(event, `pointer:${event.pointerId}`))
+    window.addEventListener('pointerup', event => finishDrag(`pointer:${event.pointerId}`))
+    window.addEventListener('pointercancel', event => finishDrag(`pointer:${event.pointerId}`))
     world.addEventListener('mousedown', event => beginDrag(event, 'mouse'))
     window.addEventListener('mousemove', event => moveDrag(event, 'mouse'))
     window.addEventListener('mouseup', () => finishDrag('mouse'))
