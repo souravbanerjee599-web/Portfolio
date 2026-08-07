@@ -16,7 +16,7 @@ export function initBackgroundRipples() {
 
     const now = performance.now()
     const distance = Math.hypot(event.clientX - lastX, event.clientY - lastY)
-    if (distance < 42 && now - lastTime < 110) return
+    if (distance < 64 && now - lastTime < 150) return
 
     lastX = event.clientX
     lastY = event.clientY
@@ -26,8 +26,11 @@ export function initBackgroundRipples() {
     ripple.className = 'cursor-ripple'
     ripple.style.left = `${event.clientX}px`
     ripple.style.top = `${event.clientY}px`
-    ripple.style.setProperty('--ripple-size', `${170 + Math.round(Math.random() * 120)}px`)
+    ripple.style.setProperty('--ripple-size', `${150 + Math.round(Math.random() * 90)}px`)
     layer.appendChild(ripple)
+    document.dispatchEvent(new CustomEvent('background-ripple', {
+      detail: { x: event.clientX, y: event.clientY },
+    }))
     ripple.addEventListener('animationend', () => ripple.remove(), { once: true })
   }, { passive: true })
 }
