@@ -1203,3 +1203,201 @@ button {
   outline-offset: 3px;
   border-radius: 2px;
 }
+
+
+/* =============================================
+   UI/UX PORTFOLIO POLISH — 2026
+   Stronger hierarchy and clearer recruiter entry points.
+   ============================================= */
+:root {
+  --accent-yellow: #f2ed55;
+  --accent-green: #a4ffcb;
+  --line: rgba(233, 231, 226, 0.22);
+}
+
+.section--hero {
+  background:
+    radial-gradient(ellipse at 78% 34%, rgba(242, 237, 85, 0.10), transparent 34%),
+    radial-gradient(ellipse at 14% 86%, rgba(164, 255, 203, 0.055), transparent 35%),
+    var(--bg);
+}
+
+.top-bar {
+  position: relative;
+  z-index: 2;
+}
+
+.logo {
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+}
+
+.pill-btn {
+  border-color: var(--accent-yellow) !important;
+  color: var(--accent-yellow) !important;
+  transition: background .25s ease, color .25s ease, transform .25s ease;
+}
+
+.pill-btn:hover {
+  background: var(--accent-yellow) !important;
+  color: var(--bg) !important;
+  transform: translateY(-2px);
+}
+
+.hero-line {
+  letter-spacing: -0.055em;
+  font-weight: 500;
+}
+
+.hero-l1 {
+  color: var(--accent-yellow);
+}
+
+.hero-l2 {
+  -webkit-text-stroke: 1px rgba(233, 231, 226, .85);
+}
+
+.hero-l3 {
+  color: var(--ink);
+}
+
+.hero-sub {
+  max-width: 32ch;
+  font-size: 13px;
+  line-height: 1.8;
+  letter-spacing: .045em;
+  border-left: 2px solid var(--accent-yellow);
+  padding-left: 20px;
+}
+
+.section-header {
+  color: var(--ink-dim);
+}
+
+.section-num {
+  color: var(--accent-yellow);
+}
+
+.section-label {
+  color: var(--ink);
+}
+
+.section-links a {
+  transition: color .2s ease;
+}
+
+.section-links a:hover,
+.footer-links a:hover {
+  color: var(--accent-yellow);
+}
+
+.about-intro {
+  max-width: 17ch;
+  font-size: clamp(24px, 3.4vw, 48px);
+  line-height: 1.22;
+  letter-spacing: -.045em;
+}
+
+.project-card {
+  border-radius: 8px;
+  border-color: rgba(233, 231, 226, .24);
+  background: linear-gradient(145deg, rgba(255,255,255,.055), rgba(255,255,255,.012));
+}
+
+.project-card:hover,
+.project-card:focus-visible {
+  border-color: var(--accent-yellow);
+  box-shadow: 0 22px 65px rgba(0, 0, 0, .38), 0 0 0 1px rgba(242,237,85,.12);
+}
+
+.card-thumb {
+  aspect-ratio: 1.08 / 1;
+}
+
+.card-thumb img {
+  filter: saturate(.88);
+}
+
+.project-card:hover .card-thumb img {
+  filter: saturate(1.08);
+}
+
+.card-thumb-overlay {
+  background: linear-gradient(to bottom, transparent 52%, rgba(14,13,22,.82));
+}
+
+.card-dot {
+  background: var(--accent-yellow);
+  box-shadow: 0 0 12px rgba(242, 237, 85, .45);
+}
+
+.card-title {
+  letter-spacing: .09em;
+  font-size: 12px;
+}
+
+.card-sub {
+  line-height: 1.6;
+}
+
+.physics-container {
+  border: 1px solid rgba(233, 231, 226, .2);
+  border-radius: 8px;
+  background: radial-gradient(ellipse at center, rgba(242,237,85,.045), transparent 62%);
+  padding: clamp(16px, 2.5vw, 30px);
+}
+
+.physics-label {
+  color: var(--accent-yellow);
+}
+
+.connect-box {
+  border-radius: 8px;
+  border-color: rgba(242, 237, 85, .4);
+  background: radial-gradient(ellipse at 50% 0%, rgba(242,237,85,.08), transparent 65%);
+}
+
+.connect-heading {
+  letter-spacing: -.065em;
+}
+
+.connect-btn {
+  border-color: var(--accent-yellow);
+  color: var(--bg);
+  background: var(--accent-yellow);
+}
+
+.connect-btn:hover {
+  background: transparent;
+  color: var(--accent-yellow);
+}
+
+.site-footer {
+  border-top-color: var(--line);
+}
+
+@media (max-width: 600px) {
+  .hero-line {
+    font-size: clamp(52px, 15vw, 84px);
+  }
+  .hero-sub {
+    font-size: 11px;
+    line-height: 1.75;
+  }
+  .about-intro {
+    max-width: 20ch;
+    font-size: clamp(25px, 7vw, 36px);
+  }
+  .card-thumb {
+    aspect-ratio: 1.2 / 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pill-btn,
+  .project-card,
+  .section-links a {
+    transition: none !important;
+  }
+}
