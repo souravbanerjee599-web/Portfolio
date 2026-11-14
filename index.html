@@ -1,272 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Sourav Banerjee is a UI/UX designer focused on clear user flows, thoughtful interaction design, and intuitive digital products."/>
-  <meta name="theme-color" content="#0e0d16"/>
-  <title>Sourav Banerjee — UI/UX Designer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="/src/styles/main.css"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sourav Banerjee — UI/UX Designer</title>
+<meta name="description" content="UI/UX designer for Web3 and commerce products. I research the problem, study competitors, then design the interface. Open to remote roles.">
+<meta name="theme-color" content="#14111f">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#14111f;--surface:#1d1930;--line:#352f52;--text:#f1eefb;--muted:#a9a3c4;--accent:#9b8cff;--accent-ink:#14111f;--ok:#7ee0b0;--warn:#f2c66d}
+@media (prefers-color-scheme:light){:root{--bg:#f7f5fd;--surface:#ffffff;--line:#d9d3ee;--text:#1a1630;--muted:#5b5578;--accent:#5a47e0;--accent-ink:#ffffff;--ok:#12724a;--warn:#8a5a00}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Poppins,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.7}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav{display:flex;align-items:center;gap:24px;min-height:64px}
+.logo{font-weight:700;text-decoration:none;margin-right:auto;font-size:18px}
+nav a:not(.logo):not(.btn){text-decoration:none;color:var(--muted);font-size:15px}
+nav a:not(.logo):not(.btn):hover{color:var(--text)}
+.btn{display:inline-block;padding:11px 20px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-weight:600;text-decoration:none;font-size:15px;border:2px solid var(--accent)}
+.btn.ghost{background:transparent;color:var(--text);border-color:var(--line)}
+.btn:hover{filter:brightness(1.1)}
+.heroarea{position:relative;overflow:hidden}
+#fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;filter:blur(18px)}
+.hero{position:relative;padding:88px 0 72px}
+.hero h1{font-size:clamp(38px,7.4vw,84px);line-height:1.08;letter-spacing:-.03em;font-weight:700;margin:0 0 28px;max-width:13ch;animation:rise .7s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.hero p{max-width:58ch;font-size:18px;color:var(--muted);margin:0 0 32px}
+.row{display:flex;flex-wrap:wrap;gap:12px}
+.status{display:inline-block;margin-bottom:24px;padding:6px 14px;border:1px solid var(--line);border-radius:999px;font-size:14px;color:var(--muted)}
+.status b{color:var(--ok);font-weight:600}
+section{padding:72px 0;border-top:1px solid var(--line)}
+h2{font-size:clamp(30px,5vw,48px);letter-spacing:-.025em;line-height:1.1;margin:0 0 16px}
+.lead{color:var(--muted);max-width:62ch;margin:0 0 40px}
+.case{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:clamp(22px,4vw,44px);margin-bottom:28px}
+.case h3{font-size:clamp(26px,4vw,38px);letter-spacing:-.02em;margin:0 0 6px;line-height:1.15}
+.tag{margin:0 0 24px;color:var(--muted)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:18px;padding:18px 0;margin:0 0 28px;border-block:1px solid var(--line)}
+.facts div{font-size:15px}
+.facts dt{color:var(--muted);font-size:14px}
+.facts dd{margin:2px 0 0;font-weight:600}
+.s-live{color:var(--warn)}.s-dev{color:var(--ok)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:32px}
+.cols h4{margin:0 0 8px;font-size:18px}
+.cols p,.cols ul{margin:0;color:var(--muted);max-width:60ch}
+.cols ul{padding-left:20px}
+.cols li{margin-bottom:6px}
+.steps{list-style:none;counter-reset:s;padding:0!important}
+.steps li{counter-increment:s;padding-left:34px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:0;top:1px;width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-size:13px;font-weight:700;display:grid;place-items:center}
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:32px 0 0}
+.shots:empty{display:none}
+.shots.phones{grid-template-columns:repeat(auto-fit,minmax(150px,220px));justify-content:start}
+.shots img{width:100%;height:auto;border-radius:12px;border:1px solid var(--line);display:block}
+.foot{margin-top:32px}
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:32px}
+.skills h3{margin:0 0 10px;font-size:20px}
+.skills p{margin:0 0 4px;color:var(--muted)}
+.contact h2{font-size:clamp(34px,6vw,64px)}
+footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:14px}
+@media (max-width:640px){nav a:not(.logo):not(.btn){display:none}.hero{padding:56px 0 48px}}
+</style>
 </head>
 <body>
+<header><div class="wrap"><nav aria-label="Main">
+<a class="logo" href="#top">Sourav Banerjee</a>
+<a href="#work">Work</a><a href="#skills">Skills</a><a href="#about">About</a>
+<a class="btn" href="#contact">Contact me</a>
+</nav></div></header>
 
-  <!-- Dust cloud canvas — below everything -->
-  <canvas id="dust-canvas"></canvas>
+<main id="top">
+<div class="heroarea"><canvas id="fx" aria-hidden="true"></canvas><div class="wrap hero">
+<span class="status"><b>Open to work</b> — remote UI/UX roles, India and worldwide</span>
+<h1>Clear products for complex ideas.</h1>
+<p>I’m a UI/UX designer for Web3 and commerce products. I start with user research and competitor analysis, then design the interface to fit what I learned.</p>
+<div class="row">
+<a class="btn" href="#work">See my work</a>
+<a class="btn ghost" href="Sourav-Banerjee-Resume.pdf">Download resume</a>
+<a class="btn ghost" href="https://www.behance.net/souravbanerjee12">Behance</a>
+</div>
+</div></div>
 
-  <!-- Film grain overlay -->
-  <div class="grain" aria-hidden="true"></div>
+<section id="work"><div class="wrap">
+<h2>Selected work</h2>
+<p class="lead">Three products I worked on at Ryuklabs. Each one lists what I did, who I worked with, and where the product stands today.</p>
 
-  <!-- SVG defs for organic reveal mask — coordinates in objectBoundingBox -->
-  <svg class="svg-defs" aria-hidden="true" focusable="false">
-    <defs>
-      <filter id="goo-edge" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">
-        <feTurbulence type="fractalNoise" baseFrequency="0.012 0.016" numOctaves="3" seed="7" result="noise"/>
-        <feDisplacementMap in="SourceGraphic" in2="noise" scale="18" result="displaced"/>
-      </filter>
-      <mask id="reveal-mask" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse">
-        <rect id="reveal-mask-rect" width="100%" height="100%" fill="white"/>
-        <circle id="reveal-hole" r="0" cx="0" cy="0" fill="black" filter="url(#goo-edge)"/>
-      </mask>
-    </defs>
-  </svg>
+<article class="case" id="siru">
+<h3>SIRU — grocery delivery app</h3>
+<p class="tag">A hyperlocal grocery delivery app for mobile.</p>
+<dl class="facts">
+<div><dt>Status</dt><dd class="s-dev">In development, not yet released</dd></div>
+<div><dt>Platform</dt><dd>Mobile app</dd></div>
+<div><dt>Team</dt><dd>Two Figma designers</dd></div>
+<div><dt>My role</dt><dd>Research, competitor analysis, UI design</dd></div>
+</dl>
+<div class="cols">
+<div><h4>How I worked</h4>
+<ul class="steps"><li>Researched how people shop for groceries and where existing apps make it harder.</li><li>Compared competing delivery apps to find gaps and patterns worth following.</li><li>Designed the UI from the UX flow, sharing the workload with a second designer.</li></ul></div>
+<div><h4>What I designed</h4>
+<ul><li>Sign-in and onboarding for new customers</li><li>A welcome screen that explains the rewards (earn, redeem, refer)</li><li>A home screen with search, offers and product cards</li><li>Delivery setup, made shorter and easier to complete</li></ul></div>
+</div>
+<!-- ADD: one sentence on which screens or flows were YOURS vs. your teammate's. Recruiters ask this about shared projects. -->
+<figure class="shots phones" style="margin-inline:0"><img src="images/siru-2.jpg" alt="SIRU sign-in screen with phone number entry" width="393" height="852" loading="lazy" onerror="this.remove()"><img src="images/siru-1.jpg" alt="SIRU welcome screen showing 50 SIRU tokens earned and reward benefits" width="393" height="852" loading="lazy" onerror="this.remove()"><img src="images/siru-3.jpg" alt="SIRU home screen with search, offers and product cards" width="393" height="852" loading="lazy" onerror="this.remove()"></figure>
+<div class="foot"><a class="btn" href="https://www.figma.com/proto/XLKlUvTwB81qBINL1pdw9v/Untitled?node-id=92-12019&amp;m=draw&amp;scaling=min-zoom&amp;content-scaling=fixed&amp;page-id=0%3A1&amp;t=oETQPht6b73XHeur-1">Open Figma prototype</a></div>
+</article>
 
-  <!-- =========================================================
-       CONTENT WRAPPER
-  ========================================================== -->
-  <div class="content-wrapper">
+<article class="case" id="dotpvp">
+<h3>DOTPVP — Web3 gaming platform</h3>
+<p class="tag">A Solana-based play-to-earn platform where players join matches and track their progress.</p>
+<dl class="facts">
+<div><dt>Status</dt><dd class="s-live">Launched, since discontinued</dd></div>
+<div><dt>Platform</dt><dd>Web</dd></div>
+<div><dt>Team</dt><dd>Solo designer</dd></div>
+<div><dt>My role</dt><dd>Research, competitor analysis, UI design</dd></div>
+</dl>
+<div class="cols">
+<div><h4>How I worked</h4>
+<ul class="steps"><li>Researched what players of crypto games need and where they get confused.</li><li>Analysed competing Web3 gaming platforms and their dashboards.</li><li>Designed the full UI from the UX flow, working alone.</li></ul></div>
+<div><h4>What I designed</h4>
+<ul><li>Wallet connection</li><li>Game dashboard with leaderboards</li><li>The game board with stake and bet controls</li><li>Social features, including live chat</li></ul></div>
+</div>
+<!-- ADD: one sentence on a design decision you made and why (e.g. how you handled wallet connect for first-time users). -->
+<figure class="shots" style="margin-inline:0"><img src="images/dotpvp-1.jpg" alt="DOTPVP home with leaderboard, live game and social feed" width="1600" height="900" loading="lazy" onerror="this.remove()"><img src="images/dotpvp-2.jpg" alt="DOTPVP game board with stake and bet controls" width="1166" height="721" loading="lazy" onerror="this.remove()"><img src="images/dotpvp-3.jpg" alt="DOTPVP live game view with chat and player list" width="1600" height="900" loading="lazy" onerror="this.remove()"></figure>
+<div class="foot"><a class="btn" href="https://www.figma.com/proto/XLKlUvTwB81qBINL1pdw9v/Untitled?node-id=139-127588&amp;m=draw&amp;scaling=min-zoom&amp;content-scaling=fixed&amp;page-id=0%3A1&amp;t=oETQPht6b73XHeur-1">Open Figma prototype</a></div>
+</article>
 
-    <!-- ========== SECTION 01 — HERO ========== -->
-    <section id="hero" class="section section--hero" aria-label="Hero">
+<article class="case" id="iagent">
+<h3>IAgent Protocol — agent dashboard</h3>
+<p class="tag">A dashboard for an AI and Web3 platform with a community focus.</p>
+<dl class="facts">
+<div><dt>Status</dt><dd class="s-live">Launched, since discontinued</dd></div>
+<div><dt>Platform</dt><dd>Web</dd></div>
+<div><dt>Team</dt><dd>Solo designer</dd></div>
+<div><dt>My role</dt><dd>Research, competitor analysis, UI design</dd></div>
+</dl>
+<div class="cols">
+<div><h4>How I worked</h4>
+<ul class="steps"><li>Researched how people interact with AI agents and community features in Web3.</li><li>Compared similar AI and Web3 platforms.</li><li>Designed the dashboard UI from the UX flow, working alone.</li></ul></div>
+<div><h4>What I designed</h4>
+<ul><li>An agent marketplace page with activity and a friends list</li><li>An agent hub with social tasks and invite rewards</li><li>Visual concepts for presenting the platform to its community</li></ul></div>
+</div>
+<!-- ADD: one sentence on what the agent dashboard let users do. -->
+<figure class="shots" style="margin-inline:0"><img src="images/iagent-1.jpg" alt="IAgent marketplace page for a single agent with activity and friends list" width="1600" height="900" loading="lazy" onerror="this.remove()"><img src="images/iagent-2.jpg" alt="IAgent agent hub with social tasks and invite rewards" width="1600" height="903" loading="lazy" onerror="this.remove()"></figure>
+<div class="foot"><a class="btn" href="https://www.figma.com/proto/XLKlUvTwB81qBINL1pdw9v/Untitled?node-id=139-128061&amp;m=draw&amp;scaling=min-zoom&amp;content-scaling=fixed&amp;page-id=0%3A1&amp;t=oETQPht6b73XHeur-1">Open Figma prototype</a></div>
+</article>
+</div></section>
 
-      <!-- Top navigation bar -->
-      <header class="top-bar" role="banner">
-        <div class="logo">SOURAV<span class="accent-dot">.</span></div>
-        <a href="#projects" class="pill-btn" aria-label="Explore selected projects">
-          VIEW SELECTED WORK
-        </a>
-      </header>
+<section id="skills"><div class="wrap">
+<h2>What I do</h2>
+<p class="lead">The tools and skills I use across projects.</p>
+<div class="skills">
+<div><h3>Research</h3><p>User research</p><p>Competitor analysis</p><p>User flows</p><p>Information architecture</p></div>
+<div><h3>Interface design</h3><p>Wireframes and high-fidelity UI</p><p>Dashboards and onboarding</p><p>Responsive web and mobile</p><p>Landing pages</p></div>
+<div><h3>Tools and systems</h3><p>Figma and interactive prototypes</p><p>Design systems and component libraries</p><p>Adobe Photoshop and Illustrator</p><p>Motion graphics and video editing</p></div>
+</div></div></section>
 
-      <!-- Hero reveal container -->
-      <div class="hero-content">
+<section id="about"><div class="wrap">
+<h2>About me</h2>
+<p class="lead">I’m Sourav, based in Raiganj, West Bengal. I’m a UI/UX designer at Ryuklabs, a Web3 and blockchain studio, where I’ve worked since 2023. Before that I designed book covers, social media graphics and print layouts, which taught me typography, layout and working to a brief.</p>
+<p class="lead">I like products with a lot going on underneath, where the interface has to make it feel simple. I hand off clean files and reusable components so developers can build what I designed.</p>
+</div></section>
 
-        <!-- Headline staircase -->
-        <div class="hero-headline-wrap">
-          <span class="sr-only">UI/UX designer</span>
-          <div class="hero-line-wrap"><div class="hero-line hero-l1" aria-hidden="true">UI/UX</div></div>
-          <div class="hero-line-wrap"><div class="hero-line hero-l2" aria-hidden="true">PRODUCT</div></div>
-          <div class="hero-line-wrap"><div class="hero-line hero-l3" aria-hidden="true">DESIGNER</div></div>
-        </div>
+<section id="contact" class="contact"><div class="wrap">
+<h2>Let’s work together.</h2>
+<p class="lead">I’m looking for a remote UI/UX role. Send me a message and I’ll reply soon.</p>
+<div class="row">
+<a class="btn" href="mailto:souravbanerjee599@gmail.com">Email me</a>
+<a class="btn ghost" href="https://www.linkedin.com/in/sourav-banerjee-852ba3249/">LinkedIn</a>
+<a class="btn ghost" href="https://www.behance.net/souravbanerjee12">Behance</a>
+<a class="btn ghost" href="Sourav-Banerjee-Resume.pdf">Resume (PDF)</a>
+</div>
+</div></section>
+</main>
 
-        <!-- Paragraph — sits to the right of DESIGNER -->
-        <p class="hero-sub">
-          I DESIGN CLEAR, THOUGHTFUL DIGITAL EXPERIENCES — FROM USER FLOWS AND WIREFRAMES TO INTERACTIVE PROTOTYPES AND POLISHED UI.
-        </p>
-
-        <!-- Down arrow — centered under headline block -->
-        <button class="hero-arrow" id="hero-arrow" aria-label="Scroll to about section">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-            <path d="M12 5v14M5 12l7 7 7-7"/>
-          </svg>
-        </button>
-
-      </div>
-
-      <!-- Reveal line (animated) -->
-      <div class="hero-reveal-line" id="hero-reveal-line" aria-hidden="true"></div>
-    </section>
-
-    <!-- ========== SECTION 02 — ABOUT ========== -->
-    <section id="about" class="section section--about scroll-reveal" aria-label="About">
-      <div class="section-header">
-        <span class="section-num">02/</span>
-        <span class="section-label">ABOUT</span>
-        <span class="section-links">
-          <a href="mailto:souravbanerjee599@gmail.com">EMAIL/</a>
-          <a href="https://www.linkedin.com/in/sourav-banerjee-852ba3249/" target="_blank" rel="noopener">LINKEDIN/</a>
-          <a href="https://www.behance.net/souravbanerjee12" target="_blank" rel="noopener">BEHANCE</a>
-        </span>
-      </div>
-
-      <div class="about-layout">
-        <p class="about-intro">
-          I'm Sourav, a UI/UX designer at Rukylabs. I turn complex product needs into clear user journeys, practical interfaces, and consistent design systems.
-        </p>
-
-        <div class="about-photo-area">
-          <!-- Marquee behind/through the card -->
-          <div class="marquee-wrap" aria-hidden="true">
-            <div class="marquee-track" id="marquee-track">
-              <span class="marquee-text">SOURAV BANERJEE — SOURAV BANERJEE — SOURAV BANERJEE — SOURAV BANERJEE — SOURAV BANERJEE — SOURAV BANERJEE — </span>
-              <span class="marquee-text" aria-hidden="true">SOURAV BANERJEE — SOURAV BANERJEE — SOURAV BANERJEE — SOURAV BANERJEE — SOURAV BANERJEE — SOURAV BANERJEE — </span>
-            </div>
-          </div>
-
-          <!-- Portrait card -->
-          <div class="portrait-card" id="portrait-card" role="img" aria-label="Portrait of Sourav Banerjee">
-            <div class="portrait-inner">
-              <img class="portrait-b" src="/images/portrait-hero.png" alt="Portrait B" draggable="false"/>
-              <img class="portrait-a" src="/images/portrait-hero.png" alt="Portrait A" id="portrait-a" draggable="false"/>
-            </div>
-          </div>
-
-          <button class="circle-btn about-arrow" aria-label="View more about">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== SECTION 03 — PROJECTS ========== -->
-    <section id="projects" class="section section--projects scroll-reveal" aria-label="Projects">
-      <div class="section-header">
-        <span class="section-num">03/</span>
-        <span class="section-label">PROJECT</span>
-        <span class="section-links">
-          <a href="https://www.behance.net/souravbanerjee12" target="_blank" rel="noopener">BEHANCE/</a>
-          <a href="#projects">PROTOTYPES</a>
-        </span>
-      </div>
-
-      <div class="projects-layout">
-        <button class="circle-btn projects-arrow" aria-label="Browse projects">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-        </button>
-        <p class="projects-intro">
-          A selection of product experiences across commerce and Web3 — with a focus on making complex journeys easier to understand and use.
-        </p>
-      </div>
-
-      <div class="cards-row" role="list">
-        <a class="project-card" data-project="0" href="https://www.figma.com/proto/XLKlUvTwB81qBINL1pdw9v/Untitled?node-id=139-127588&amp;m=draw&amp;scaling=min-zoom&amp;content-scaling=fixed&amp;page-id=0%3A1&amp;t=oETQPht6b73XHeur-1" aria-label="DOTPVP Dashboard — Web3 Platform. Opens the interactive prototype.">
-          <div class="card-thumb">
-            <img src="/images/dotpvp-thumb.png" alt="DOTPVP Dashboard preview" loading="lazy"/>
-            <div class="card-thumb-overlay" aria-hidden="true"></div>
-          </div>
-          <div class="card-footer">
-            <span class="card-dot" aria-hidden="true"></span>
-            <div class="card-text">
-              <strong class="card-title">DOTPVP DASHBOARD</strong>
-              <span class="card-sub">Web3 · Gameplay experience</span>
-            </div>
-            <span class="card-arrow" aria-hidden="true">→</span>
-          </div>
-        </a>
-
-        <a class="project-card" data-project="1" role="listitem" href="https://www.figma.com/proto/XLKlUvTwB81qBINL1pdw9v/Untitled?node-id=92-12019&amp;m=draw&amp;scaling=min-zoom&amp;content-scaling=fixed&amp;page-id=0%3A1&amp;t=oETQPht6b73XHeur-1" aria-label="SIRU Mobile App — Hyperlocal Commerce. Opens the interactive prototype.">
-          <div class="card-thumb">
-            <img src="/images/siru-thumb.png" alt="SIRU Mobile App preview" loading="lazy"/>
-            <div class="card-thumb-overlay" aria-hidden="true"></div>
-          </div>
-          <div class="card-footer">
-            <span class="card-dot" aria-hidden="true"></span>
-            <div class="card-text">
-              <strong class="card-title">SIRU MOBILE APP</strong>
-              <span class="card-sub">Commerce · Grocery shopping</span>
-            </div>
-            <span class="card-arrow" aria-hidden="true">→</span>
-          </div>
-        </a>
-
-        <a class="project-card" data-project="2" href="https://www.figma.com/proto/XLKlUvTwB81qBINL1pdw9v/Untitled?node-id=139-128061&amp;m=draw&amp;scaling=min-zoom&amp;content-scaling=fixed&amp;page-id=0%3A1&amp;t=oETQPht6b73XHeur-1" aria-label="Agent Dashboard — Web3 Platform. Opens the interactive prototype.">
-          <div class="card-thumb">
-            <img src="/images/agent-thumb.png" alt="Agent Dashboard preview" loading="lazy"/>
-            <div class="card-thumb-overlay" aria-hidden="true"></div>
-          </div>
-          <div class="card-footer">
-            <span class="card-dot" aria-hidden="true"></span>
-            <div class="card-text">
-              <strong class="card-title">AGENT DASHBOARD</strong>
-              <span class="card-sub">Web3 Platform</span>
-            </div>
-            <span class="card-arrow" aria-hidden="true">→</span>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <!-- ========== SECTION 04 — CAPABILITIES ========== -->
-    <section id="capabilities" class="section section--capabilities scroll-reveal" aria-label="Capabilities">
-      <div class="section-header">
-        <span class="section-num">04/</span>
-        <span class="section-label">CAPABILITIES</span>
-        <span class="section-links">
-          <a href="#projects">SELECTED WORK/</a>
-          <a href="#connect">CONTACT/</a>
-        </span>
-      </div>
-
-      <div class="physics-container" id="physics-container" aria-label="Interactive capabilities showcase — drag the circles">
-        <div class="physics-header" aria-hidden="true">
-          <span class="physics-label">CLICK AND DRAG</span>
-          <h3 class="physics-heading">WHAT I BRING TO A PRODUCT</h3>
-        </div>
-        <div class="physics-world" id="physics-world" touch-action="none">
-          <!-- Matter.js circles injected here -->
-        </div>
-      </div>
-    </section>
-
-    <!-- ========== SECTION 05 — LET'S CONNECT ========== -->
-    <section id="connect" class="section section--connect scroll-reveal" aria-label="Contact">
-      <div class="section-header">
-        <span class="section-num">05/</span>
-        <span class="section-label">CONNECT</span>
-        <span class="section-links">
-          <a href="mailto:souravbanerjee599@gmail.com">EMAIL/</a>
-          <a href="https://www.linkedin.com/in/sourav-banerjee-852ba3249/" target="_blank" rel="noopener">LINKEDIN/</a>
-        </span>
-      </div>
-
-      <div class="connect-box">
-        <span class="connect-eyebrow">OPEN TO UI/UX DESIGN OPPORTUNITIES</span>
-        <h2 class="connect-heading">LET'S<br/>CONNECT</h2>
-        <a href="mailto:souravbanerjee599@gmail.com" class="connect-btn circle-large-btn" aria-label="Write a message to Sourav">
-          WRITE A MESSAGE
-        </a>
-      </div>
-    </section>
-
-    <!-- ========== FOOTER ========== -->
-    <footer class="site-footer" role="contentinfo">
-      <span class="footer-copy">FEEL FREE TO CONNECT WITH ME ON SOCIAL</span>
-      <nav class="footer-links" aria-label="Social links">
-        <a href="https://x.com/SouravB09911413" target="_blank" rel="noopener">X</a>
-        <a href="https://www.linkedin.com/in/sourav-banerjee-852ba3249/" target="_blank" rel="noopener">LINKEDIN</a>
-      </nav>
-    </footer>
-
-  </div><!-- /content-wrapper -->
-
-  <!-- ========== LIGHTBOX ========== -->
-  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Project case study" hidden>
-    <div class="lightbox-inner">
-      <div class="lightbox-topbar">
-        <span class="lightbox-title" id="lightbox-title"></span>
-        <a class="lightbox-external-link" id="lb-external-link" href="#" target="_blank" rel="noopener noreferrer" hidden>VIEW FIGMA DESIGN &#8599;</a>
-        <button class="lightbox-close" id="lightbox-close" aria-label="Close project viewer">×</button>
-      </div>
-      <div class="lightbox-stage">
-        <button class="lb-nav lb-prev" id="lb-prev" aria-label="Previous slide">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 18l-6-6 6-6"/></svg>
-        </button>
-        <div class="lb-slide-wrap">
-          <img class="lb-main-img" id="lb-main-img" src="" alt="" loading="eager"/>
-        </div>
-        <button class="lb-nav lb-next" id="lb-next" aria-label="Next slide">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18l6-6-6-6"/></svg>
-        </button>
-      </div>
-      <div class="lb-thumbnails" id="lb-thumbnails" role="tablist" aria-label="Slide thumbnails"></div>
-    </div>
-  </div>
-
-  <script type="module" src="/src/main.js"></script>
+<footer><div class="wrap">© 2026 Sourav Banerjee</div></footer>
+<script>
+(function(){
+var c=document.getElementById("fx");if(!c)return;
+var x=c.getContext("2d"),area=c.parentNode,G=[],W,H,run=true,t0=0,mx=0,my=0,tx=0,ty=0;
+var still=matchMedia("(prefers-reduced-motion: reduce)").matches;
+var light=matchMedia("(prefers-color-scheme: light)");
+function acc(){var v=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim(),n;
+ if(v.length===4)v="#"+v[1]+v[1]+v[2]+v[2]+v[3]+v[3];n=parseInt(v.slice(1),16);return(n>>16)+","+(n>>8&255)+","+(n&255)}
+function size(){W=area.clientWidth;H=area.clientHeight;c.width=W;c.height=H;
+ var a=acc(),b=light.matches?"90,170,255":"255,130,190",k=W<640?4:6,r=Math.max(W,500);G=[];
+ for(var i=0;i<k;i++)G.push({bx:Math.random()*W,by:Math.random()*H,ax:60+Math.random()*120,ay:40+Math.random()*90,
+  sx:.00008+Math.random()*.00009,sy:.00007+Math.random()*.00009,px:Math.random()*6.28,py:Math.random()*6.28,
+  r:r*(.18+Math.random()*.2),col:i%3===2?b:a,al:light.matches?.14:.17,z:.2+Math.random()*.8})}
+function draw(t){x.clearRect(0,0,W,H);x.globalCompositeOperation=light.matches?"source-over":"lighter";
+ mx+=(tx-mx)*.04;my+=(ty-my)*.04;
+ for(var i=0;i<G.length;i++){var g=G[i],px=g.bx+Math.sin(t*g.sx+g.px)*g.ax+mx*40*g.z,py=g.by+Math.cos(t*g.sy+g.py)*g.ay+my*40*g.z,
+  q=x.createRadialGradient(px,py,0,px,py,g.r);
+  q.addColorStop(0,"rgba("+g.col+","+g.al+")");q.addColorStop(.5,"rgba("+g.col+","+g.al*.35+")");q.addColorStop(1,"rgba("+g.col+",0)");
+  x.fillStyle=q;x.fillRect(px-g.r,py-g.r,g.r*2,g.r*2)}
+ if(!still&&run)requestAnimationFrame(draw)}
+area.addEventListener("pointermove",function(e){var r=area.getBoundingClientRect();tx=(e.clientX-r.left)/r.width-.5;ty=(e.clientY-r.top)/r.height-.5});
+area.addEventListener("pointerleave",function(){tx=ty=0});
+if("IntersectionObserver"in window)new IntersectionObserver(function(e){var v=e[0].isIntersecting;if(v&&!run&&!still){run=true;requestAnimationFrame(draw)}run=v}).observe(area);
+addEventListener("resize",function(){size();if(still)draw(0)});
+light.addEventListener("change",function(){size();if(still)draw(0)});
+size();requestAnimationFrame(draw);
+})();
+</script>
 </body>
 </html>
